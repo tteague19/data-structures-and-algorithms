@@ -49,4 +49,53 @@ public class SinglyLinkedListTests {
         Assert.assertEquals(null, actualSLList.getTail().getNext());
         Assert.assertEquals(3, actualSLList.size());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddToBackIllegalArgumentException() {
+        SinglyLinkedList<Integer> actualSLList = new SinglyLinkedList<>();
+        actualSLList.addToBack(null);
+    }
+
+    @Test
+    public void testAddToBackEmptySLL() {
+        SinglyLinkedList<Integer> actualSLList = new SinglyLinkedList<>();
+        int testData = 3;
+
+        actualSLList.addToBack(testData);
+
+        Assert.assertEquals(Integer.valueOf(testData), actualSLList.getHead().getData());
+        Assert.assertEquals(Integer.valueOf(testData), actualSLList.getTail().getData());
+        Assert.assertEquals(null, actualSLList.getHead().getNext());
+        Assert.assertEquals(null, actualSLList.getTail().getNext());
+        Assert.assertEquals(1, actualSLList.size());
+    }
+
+    @Test
+    public void testAddToBackMultipleElements() {
+        SinglyLinkedList<Integer> actualSLList = new SinglyLinkedList<>();
+        int testData1 = 3;
+        int testData2 = 8;
+        int testData3 = 5;
+        int testData4 = 1;
+        int testData5 = 14;
+
+        actualSLList.addToFront(testData1);
+        actualSLList.addToFront(testData2);
+        actualSLList.addToFront(testData3);
+
+        actualSLList.addToBack(testData4);
+        actualSLList.addToBack(testData5);
+
+        Assert.assertEquals(Integer.valueOf(testData3), actualSLList.getHead().getData());
+        Assert.assertEquals(Integer.valueOf(testData5), actualSLList.getTail().getData());
+        Assert.assertEquals(Integer.valueOf(testData4),
+                            actualSLList.getHead().getNext().getNext().getNext().getData());
+        Assert.assertEquals(Integer.valueOf(testData4),
+                            actualSLList.getHead().getNext().getNext().getNext().getData());
+
+        Assert.assertEquals(Integer.valueOf(testData5),
+                            actualSLList.getHead().getNext().getNext().getNext().getNext().getData());
+        Assert.assertEquals(null, actualSLList.getTail().getNext());
+        Assert.assertEquals(5, actualSLList.size());
+    }
 }

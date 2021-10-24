@@ -57,6 +57,23 @@ public class SinglyLinkedList<T> {
      */
     public void addToBack(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
+
+        SinglyLinkedListNode<T> backNode = new SinglyLinkedListNode<>(data);
+
+        // In this case, the SLL is empty. Aslo note that the next
+        // pointer of backNode is null by default.
+        if (this.head == null) {
+            this.head = backNode;
+            this.tail = backNode;
+        } else {
+            this.tail.setNext(backNode);
+            this.tail = backNode;
+        }
+
+        size++;
     }
 
     /**
