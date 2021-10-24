@@ -23,6 +23,7 @@ public class SinglyLinkedListTests {
         Assert.assertEquals(Integer.valueOf(testData), actualSLList.getTail().getData());
         Assert.assertEquals(null, actualSLList.getHead().getNext());
         Assert.assertEquals(null, actualSLList.getTail().getNext());
+        Assert.assertEquals(1, actualSLList.size());
     }
 
     @Test
@@ -39,11 +40,13 @@ public class SinglyLinkedListTests {
         Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getTail().getData());
         Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getHead().getNext().getData());
         Assert.assertEquals(null, actualSLList.getTail().getNext());
+        Assert.assertEquals(2, actualSLList.size());
 
         actualSLList.addToFront(testData3);
         Assert.assertEquals(Integer.valueOf(testData3), actualSLList.getHead().getData());
         Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getTail().getData());
         Assert.assertEquals(Integer.valueOf(testData2), actualSLList.getHead().getNext().getData());
         Assert.assertEquals(null, actualSLList.getTail().getNext());
+        Assert.assertEquals(3, actualSLList.size());
     }
 }
