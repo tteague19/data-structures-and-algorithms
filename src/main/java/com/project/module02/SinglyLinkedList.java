@@ -39,6 +39,9 @@ public class SinglyLinkedList<T> {
         if (this.head == null) {
             this.head = frontNode;
             this.tail = frontNode;
+        } else {
+            frontNode.setNext(this.head);
+            this.head = frontNode;
         }
 
         size++;
