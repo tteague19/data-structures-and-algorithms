@@ -31,6 +31,17 @@ public class SinglyLinkedList<T> {
         if (data == null) {
             throw new IllegalArgumentException();
         }
+
+        SinglyLinkedListNode<T> frontNode = new SinglyLinkedListNode<>(data);
+
+        // In this case, the SLL is empty. Also note that the next
+        // pointer of frontNode is null by default.
+        if (this.head == null) {
+            this.head = frontNode;
+            this.tail = frontNode;
+        }
+
+        size++;
     }
 
     /**
