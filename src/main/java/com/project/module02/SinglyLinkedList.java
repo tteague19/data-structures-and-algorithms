@@ -86,6 +86,28 @@ public class SinglyLinkedList<T> {
      */
     public T removeFromFront() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+
+        // This case occurs if we have an empty list.
+        if (this.head == null) {
+            throw new NoSuchElementException();
+        }
+
+        SinglyLinkedListNode<T> headTemp = this.head;
+        this.head = this.head.getNext();
+        headTemp.setNext(null);
+
+        // This case occurs if we had one element in the list.
+        if (this.tail == headTemp) {
+            this.tail = null;
+        }
+
+        // We decrement the size after removing one element from the
+        // list.
+        size--;
+
+        // Finally, we return the data from the element that used to
+        // be at the front of the list.
+        return headTemp.getData();
     }
 
     /**
