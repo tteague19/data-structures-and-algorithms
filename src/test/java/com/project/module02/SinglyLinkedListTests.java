@@ -152,4 +152,57 @@ public class SinglyLinkedListTests {
         Assert.assertEquals(null, actualSLList.getTail());
         Assert.assertEquals(size, actualSLList.size());
     }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testRemoveFromBackNoSuchElement() {
+        SinglyLinkedList<Integer> actualSLList = new SinglyLinkedList<>();
+        int value = actualSLList.removeFromBack();
+    }
+
+    @Test
+    public void testRemoveFromBack() {
+        SinglyLinkedList<Integer> actualSLList = new SinglyLinkedList<>();
+        int testData1 = 1;
+        int testData2 = 2;
+        int testData3 = 3;
+        int testData4 = 4;
+        int testData5 = 5;
+        int size = 5;
+
+        actualSLList.addToBack(testData1);
+        actualSLList.addToBack(testData2);
+        actualSLList.addToBack(testData3);
+        actualSLList.addToBack(testData4);
+        actualSLList.addToBack(testData5);
+
+        Assert.assertEquals(Integer.valueOf(testData5), actualSLList.removeFromBack());
+        size--;
+        Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getHead().getData());
+        Assert.assertEquals(Integer.valueOf(testData4), actualSLList.getTail().getData());
+        Assert.assertEquals(size, actualSLList.size());
+
+        Assert.assertEquals(Integer.valueOf(testData4), actualSLList.removeFromBack());
+        size--;
+        Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getHead().getData());
+        Assert.assertEquals(Integer.valueOf(testData3), actualSLList.getTail().getData());
+        Assert.assertEquals(size, actualSLList.size());
+
+        Assert.assertEquals(Integer.valueOf(testData3), actualSLList.removeFromBack());
+        size--;
+        Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getHead().getData());
+        Assert.assertEquals(Integer.valueOf(testData2), actualSLList.getTail().getData());
+        Assert.assertEquals(size, actualSLList.size());
+
+        Assert.assertEquals(Integer.valueOf(testData2), actualSLList.removeFromBack());
+        size--;
+        Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getHead().getData());
+        Assert.assertEquals(Integer.valueOf(testData1), actualSLList.getTail().getData());
+        Assert.assertEquals(size, actualSLList.size());
+
+        Assert.assertEquals(Integer.valueOf(testData1), actualSLList.removeFromBack());
+        size--;
+        Assert.assertEquals(null, actualSLList.getHead());
+        Assert.assertEquals(null, actualSLList.getTail());
+        Assert.assertEquals(size, actualSLList.size());
+    }
 }

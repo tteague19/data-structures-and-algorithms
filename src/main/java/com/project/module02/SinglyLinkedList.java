@@ -120,6 +120,33 @@ public class SinglyLinkedList<T> {
      */
     public T removeFromBack() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        // This case occurs if we have an empty list.
+        if (this.tail == null) {
+            throw new NoSuchElementException();
+        }
+
+        SinglyLinkedListNode<T> tailTemp = this.tail;
+
+        // This case occurs if we had one element in the list.
+        if (this.head == tailTemp) {
+            this.head = null;
+            this.tail = null;
+        } else {
+            SinglyLinkedListNode<T> current = this.head;
+            // We move down the list until we reach the node whose next
+            // pointer is the current tail node.
+            while (current.getNext().getNext() != null) {
+                current = current.getNext();
+            }
+            this.tail = current;
+            current.setNext(null);
+        }
+
+        // We decrement the size after removing one element from the
+        // list.
+        size--;
+
+        return tailTemp.getData();
     }
 
     /**
