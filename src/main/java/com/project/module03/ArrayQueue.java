@@ -46,6 +46,9 @@ public class ArrayQueue<T> {
      */
     public void enqueue(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
