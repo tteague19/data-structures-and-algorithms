@@ -49,6 +49,23 @@ public class ArrayQueue<T> {
         if (data == null) {
             throw new IllegalArgumentException();
         }
+
+        // In this case, we must resize the array.
+        if (this.size == (this.backingArray.length)) {
+            int newCapacity = 2 * this.backingArray.length;
+            T[] newBackingArray = (T[]) new Object[newCapacity];
+
+            for (int index = 0; index < this.backingArray.length; index++) {
+                int backingArrayIndex = (this.front + index) % this.backingArray.length;
+                newBackingArray[index] = this.backingArray[backingArrayIndex];
+            }
+
+            this.backingArray = newBackingArray;
+        }
+
+        int backIndex = (this.front + this.size) % this.backingArray.length;
+        this.backingArray[backIndex] = data;
+        this.size++;
     }
 
     /**
