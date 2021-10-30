@@ -61,6 +61,7 @@ public class ArrayQueue<T> {
             }
 
             this.backingArray = newBackingArray;
+            this.front = 0;
         }
 
         int backIndex = (this.front + this.size) % this.backingArray.length;
