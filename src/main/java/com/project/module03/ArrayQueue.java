@@ -86,6 +86,17 @@ public class ArrayQueue<T> {
      */
     public T dequeue() {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (this.size == 0) {
+            throw new NoSuchElementException();
+        }
+
+        T returnVal = this.backingArray[this.front];
+
+        this.backingArray[this.front] = null;
+        this.front = (this.front + 1) % this.backingArray.length;
+        this.size--;
+
+        return returnVal;
     }
 
     /**
