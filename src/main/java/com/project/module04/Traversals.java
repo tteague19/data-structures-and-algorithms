@@ -36,13 +36,8 @@ public class Traversals<T extends Comparable<? super T>> {
         }
 
         traversal.add(root.getData());
-
-        if (root.getLeft() == null && root.getRight() == null) {
-            return traversal;
-        } else {
-            traversal.addAll(preorder(root.getLeft()));
-            traversal.addAll(preorder(root.getRight()));
-        }
+        traversal.addAll(preorder(root.getLeft()));
+        traversal.addAll(preorder(root.getRight()));
 
         return traversal;
     }
