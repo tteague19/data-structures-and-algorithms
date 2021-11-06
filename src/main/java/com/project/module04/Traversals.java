@@ -62,6 +62,17 @@ public class Traversals<T extends Comparable<? super T>> {
      */
     public List<T> inorder(TreeNode<T> root) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        List<T> traversal = new ArrayList<>();
+
+        if (root == null) {
+            return traversal;
+        }
+
+        traversal.addAll(inorder(root.getLeft()));
+        traversal.add(root.getData());
+        traversal.addAll(inorder(root.getRight()));
+
+        return traversal;
     }
 
     /**
