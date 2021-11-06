@@ -29,6 +29,22 @@ public class Traversals<T extends Comparable<? super T>> {
      */
     public List<T> preorder(TreeNode<T> root) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        List<T> traversal = new ArrayList<>();
+
+        if (root == null) {
+            return traversal;
+        }
+
+        traversal.add(root.getData());
+
+        if (root.getLeft() == null && root.getRight() == null) {
+            return traversal;
+        } else {
+            traversal.addAll(preorder(root.getLeft()));
+            traversal.addAll(preorder(root.getRight()));
+        }
+
+        return traversal;
     }
 
     /**
