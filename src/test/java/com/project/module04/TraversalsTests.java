@@ -1,7 +1,5 @@
 package com.project.module04;
 
-import org.junit.Assert.assertArrayEquals;
-
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
