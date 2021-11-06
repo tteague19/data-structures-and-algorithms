@@ -85,5 +85,16 @@ public class Traversals<T extends Comparable<? super T>> {
      */
     public List<T> postorder(TreeNode<T> root) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        List<T> traversal = new ArrayList<>();
+
+        if (root == null) {
+            return traversal;
+        }
+
+        traversal.addAll(postorder(root.getLeft()));
+        traversal.addAll(postorder(root.getRight()));
+        traversal.add(root.getData());
+
+        return traversal;
     }
 }
