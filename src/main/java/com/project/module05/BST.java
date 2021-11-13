@@ -45,6 +45,7 @@ public class BST<T extends Comparable<? super T>> {
     private BSTNode<T> addHelper(T data, BSTNode<T> current) {
 
         if (current == null) {
+            this.size++;
             return new BSTNode<T>(data);
         }
         if (data.compareTo(current.getData()) > 0) {
