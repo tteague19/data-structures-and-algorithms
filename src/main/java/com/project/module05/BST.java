@@ -35,6 +35,25 @@ public class BST<T extends Comparable<? super T>> {
      */
     public void add(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        this.root = addHelper(data, this.root);
+    }
+
+    private BSTNode<T> addHelper(T data, BSTNode<T> current) {
+
+        if (current == null) {
+            return new BSTNode<T>(data);
+        }
+        if (data.compareTo(current.getData()) > 0) {
+            current.setRight(addHelper(data, current.getRight()));
+            return current;
+        } else if (data.compareTo(current.getData()) < 0) {
+            current.setLeft(addHelper(data, current.getLeft()));
+            return current;
+        }
+
+        // If a node with this value is already in the BST, do not
+        // add it.
+        return current;
     }
 
     /**
