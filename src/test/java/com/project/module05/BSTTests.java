@@ -46,6 +46,90 @@ public class BSTTests {
         assert(nodeEqualityHelper(node5, tree.getRoot().getRight().getRight()));
     }
 
+    @Test
+    public void testAddSizeUpdate() {
+        // Build the expected tree
+        BSTNode<Integer> node1 = new BSTNode<Integer>(50);
+        BSTNode<Integer> node2 = new BSTNode<Integer>(15);
+        BSTNode<Integer> node3 = new BSTNode<Integer>(75);
+        BSTNode<Integer> node4 = new BSTNode<Integer>(5);
+        BSTNode<Integer> node5 = new BSTNode<Integer>(100);
+        BSTNode<Integer> node6 = new BSTNode<Integer>(10);
+        BSTNode<Integer> node7 = new BSTNode<Integer>(25);
+        node1.setLeft(node2);
+        node1.setRight(node3);
+        node2.setLeft(node4);
+        node3.setRight(node5);
+        node4.setRight(node6);
+        node2.setRight(node7);
+
+        BST<Integer> tree = new BST<>();
+        int expectedSize = 0;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(50);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(15);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(75);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(100);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(25);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(5);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        tree.add(10);
+        expectedSize++;
+        assertEquals(expectedSize, tree.size());
+
+        // Check that we do not add duplicated data
+        tree.add(10);
+        assertEquals(expectedSize, tree.size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddNullValue() {
+        // Build the expected tree
+        BSTNode<Integer> node1 = new BSTNode<Integer>(50);
+        BSTNode<Integer> node2 = new BSTNode<Integer>(15);
+        BSTNode<Integer> node3 = new BSTNode<Integer>(75);
+        BSTNode<Integer> node4 = new BSTNode<Integer>(5);
+        BSTNode<Integer> node5 = new BSTNode<Integer>(100);
+        BSTNode<Integer> node6 = new BSTNode<Integer>(10);
+        BSTNode<Integer> node7 = new BSTNode<Integer>(25);
+        node1.setLeft(node2);
+        node1.setRight(node3);
+        node2.setLeft(node4);
+        node3.setRight(node5);
+        node4.setRight(node6);
+        node2.setRight(node7);
+
+        BST<Integer> tree = new BST<>();
+        tree.add(50);
+        tree.add(15);
+        tree.add(75);
+        tree.add(100);
+        tree.add(25);
+        tree.add(5);
+        tree.add(10);
+
+        tree.add(null);
+    }
+
+
     public boolean nodeEqualityHelper(BSTNode<Integer> expected, BSTNode<Integer> actual) {
         boolean condition1 = (actual.getData() == expected.getData());
         boolean condition2;
