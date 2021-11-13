@@ -34,6 +34,9 @@ public class BSTTests {
         tree.add(5);
         tree.add(10);
 
+        // Check that we do not add duplicated data
+        tree.add(10);
+
         assert(nodeEqualityHelper(node1, tree.getRoot()));
         assert(nodeEqualityHelper(node2, tree.getRoot().getLeft()));
         assert(nodeEqualityHelper(node3, tree.getRoot().getRight()));
