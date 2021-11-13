@@ -1,5 +1,6 @@
 package com.project.module05;
 
+import java.util.Objects;
 import java.util.NoSuchElementException;
 
 /**
@@ -35,7 +36,7 @@ public class BST<T extends Comparable<? super T>> {
      */
     public void add(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        if (data == null) {
+        if (Objects.equals(data, null)) {
             throw new IllegalArgumentException();
         }
 
@@ -44,7 +45,7 @@ public class BST<T extends Comparable<? super T>> {
 
     private BSTNode<T> addHelper(T data, BSTNode<T> current) {
 
-        if (current == null) {
+        if (Objects.equals(current, null)) {
             this.size++;
             return new BSTNode<T>(data);
         }
@@ -90,14 +91,14 @@ public class BST<T extends Comparable<? super T>> {
      */
     public T remove(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        if (data == null) {
+        if (Objects.equals(data, null)) {
             throw new IllegalArgumentException();
         }
 
         BSTNode<T> dummy = new BSTNode<>(null);
         this.root = removeHelper(data, this.root, dummy);
 
-        if (dummy.getData() == null) {
+        if (Objects.equals(dummy.getData(), null)) {
             throw new NoSuchElementException();
         }
 
@@ -106,21 +107,21 @@ public class BST<T extends Comparable<? super T>> {
     }
 
     private BSTNode<T> removeHelper(T data, BSTNode<T> current, BSTNode<T> dummy) {
-        if (current == null) {
+        if (Objects.equals(current, null)) {
             return null;
-        } else if (current.getData() == data) {
+        } else if (current.getData().equals(data)) {
             dummy.setData(data);
 
             int numChildren = countNumberOfChildren(current);
-            if (numChildren == 0) {
+            if (Objects.equals(numChildren, 0)) {
                 return null;
-            } else if (numChildren == 1) {
-                if (current.getLeft() != null) {
+            } else if (Objects.equals(numChildren, 1)) {
+                if (!Objects.equals(current.getLeft(), null)) {
                     return current.getLeft();
                 } else {
                     return current.getRight();
                 }
-            } else if (numChildren == 2) {
+            } else if (Objects.equals(numChildren, 2)) {
                 BSTNode<T> dummy2 = new BSTNode<>(null);
                 BSTNode<T> successor = findSuccessor(current.getRight(), dummy2);
                 current.setRight(successor);
@@ -139,11 +140,11 @@ public class BST<T extends Comparable<? super T>> {
     private int countNumberOfChildren(BSTNode<T> node) {
         int numChildren = 0;
 
-        if (node.getLeft() != null) {
+        if (!Objects.equals(node.getLeft(), null)) {
             numChildren++;
         }
 
-        if (node.getRight() != null) {
+        if (!Objects.equals(node.getRight(), null)) {
             numChildren++;
         }
 
@@ -151,7 +152,7 @@ public class BST<T extends Comparable<? super T>> {
     }
 
     private BSTNode<T> findSuccessor(BSTNode<T> current, BSTNode<T> dummy) {
-        if (current.getLeft() == null) {
+        if (Objects.equals(current.getLeft(), null)) {
             dummy.setData(current.getData());
             return current.getRight();
         }
