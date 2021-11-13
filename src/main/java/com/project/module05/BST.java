@@ -90,6 +90,75 @@ public class BST<T extends Comparable<? super T>> {
      */
     public T remove(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
+
+        BSTNode<T> dummy = new BSTNode<>(null);
+        this.root = removeHelper(data, this.root, dummy);
+
+        if (dummy.getData() == null) {
+            throw new NoSuchElementException();
+        }
+
+        this.size--;
+        return dummy.getData();
+    }
+
+    private BSTNode<T> removeHelper(T data, BSTNode<T> current, BSTNode<T> dummy) {
+        if (current == null) {
+            return null;
+        } else if (current.getData() == data) {
+            dummy.setData(data);
+
+            int numChildren = countNumberOfChildren(current);
+            if (numChildren == 0) {
+                return null;
+            } else if (numChildren == 1) {
+                if (current.getLeft() != null) {
+                    return current.getLeft();
+                } else {
+                    return current.getRight();
+                }
+            } else if (numChildren == 2) {
+                BSTNode<T> dummy2 = new BSTNode<>(null);
+                BSTNode<T> successor = findSuccessor(current.getRight(), dummy2);
+                current.setRight(successor);
+                current.setData(dummy2.getData());
+            }
+
+        } else if (data.compareTo(current.getData()) < 0) {
+            current.setLeft(removeHelper(data, current.getLeft(), dummy));
+        } else {
+            current.setRight(removeHelper(data, current.getRight(), dummy));
+        }
+
+        return current;
+    }
+
+    private int countNumberOfChildren(BSTNode<T> node) {
+        int numChildren = 0;
+
+        if (node.getLeft() != null) {
+            numChildren++;
+        }
+
+        if (node.getRight() != null) {
+            numChildren++;
+        }
+
+        return numChildren;
+    }
+
+    private BSTNode<T> findSuccessor(BSTNode<T> current, BSTNode<T> dummy) {
+        if (current.getLeft() == null) {
+            dummy.setData(current.getData());
+            return current.getRight();
+        }
+
+        current.setLeft(findSuccessor(current.getLeft(), dummy));
+
+        return current;
     }
 
     /**
