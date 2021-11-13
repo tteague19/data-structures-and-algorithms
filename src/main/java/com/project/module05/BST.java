@@ -35,6 +35,9 @@ public class BST<T extends Comparable<? super T>> {
      */
     public void add(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
 
         this.root = addHelper(data, this.root);
     }
