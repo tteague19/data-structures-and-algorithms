@@ -46,8 +46,6 @@ public class MinHeap<T extends Comparable<? super T>> {
             throw new IllegalArgumentException();
         }
 
-        // In this case, we are adding to an empty array
-
         // Resize the array, if necessary. We account for the empty
         // space at the first index of the array.
         if (this.size == (this.backingArray.length - 1)) {
@@ -94,6 +92,62 @@ public class MinHeap<T extends Comparable<? super T>> {
         if (this.size == 0) {
             throw new NoSuchElementException();
         }
+
+        // We first remove the minimum value from the heap and place
+        // that top value with the last element in the heap.
+        T minVal = this.backingArray[1];
+        this.backingArray[1] = this.backingArray[this.size];
+        this.backingArray[this.size] = null;
+        this.size--;
+
+        // Next, we perform the "heapify down" operation.
+        int swapIndex = 1;
+        int parentIndex = 1;
+
+        // We loop until we can no longer swap the parent with a
+        // smaller child or the parent is a leaf node
+        while(2 * parentIndex <= this.size) {
+            T parentData = this.backingArray[parentIndex];
+
+            int swapIndexLeft = 2 * parentIndex;
+            T childDataLeft = this.backingArray[swapIndexLeft];
+
+            int swapIndexRight = 2 * parentIndex + 1;
+            T childDataRight = this.backingArray[swapIndexRight];
+
+            T childData;
+
+            // If the parent node has two children, we select the
+            // swap candidate as the smaller of the two children.
+            if (childDataLeft != null && childDataRight != null) {
+                if (childDataLeft.compareTo(childDataRight) < 0) {
+                    childData = childDataLeft;
+                    swapIndex = swapIndexLeft;
+                } else {
+                    childData = childDataRight;
+                    swapIndex = swapIndexRight;
+                }
+            } else if (childDataLeft != null) {
+                // We only need to check the left child since at least
+                // one of the children is null and a heap must be
+                // filled from left to right.
+                childData = childDataLeft;
+                swapIndex = swapIndexLeft;
+            } else {
+                // In this case, the parent node is a leaf node.
+                break;
+            }
+
+            if (childData.compareTo(parentData) < 0) {
+                this.backingArray[parentIndex] = childData;
+                this.backingArray[swapIndex] = parentData;
+                parentIndex = swapIndex;
+            } else {
+                break;
+            }
+        }
+
+        return minVal;
     }
 
     /**
