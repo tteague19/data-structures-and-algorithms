@@ -45,6 +45,38 @@ public class MinHeap<T extends Comparable<? super T>> {
         if (data == null) {
             throw new IllegalArgumentException();
         }
+
+        // In this case, we are adding to an empty array
+
+        // Resize the array, if necessary. We account for the empty
+        // space at the first index of the array.
+        if (this.size == (this.backingArray.length - 1)) {
+            T[] newBackingArray = (T[]) new Comparable[2 * this.backingArray.length];
+            for (int index = 1; index <= this.size; index++) {
+                newBackingArray[index] = this.backingArray[index];
+            }
+            this.backingArray = newBackingArray;
+        }
+
+        // We first place the new entry after the element in the
+        // backing array that was previously in the final position.
+        // This operation is equivalent to placing the new entry in a
+        // node on the bottom level of the tree filled left to right.
+        this.size++;
+        this.backingArray[this.size] = data;
+
+        // Now, we perform the "heapify up" operation.
+        for (int index = this.size; index / 2 > 0; index = index / 2) {
+            T parentData = this.backingArray[index / 2];
+            T childData = this.backingArray[index];
+
+            if (childData.compareTo(parentData) < 0) {
+                this.backingArray[index] = parentData;
+                this.backingArray[index / 2] = childData;
+            } else {
+                break;
+            }
+        }
     }
 
     /**
