@@ -110,7 +110,7 @@ public class BST<T extends Comparable<? super T>> {
         if (Objects.equals(current, null)) {
             return null;
         } else if (current.getData().equals(data)) {
-            dummy.setData(data);
+            dummy.setData(current.getData());
 
             int numChildren = countNumberOfChildren(current);
             if (Objects.equals(numChildren, 0)) {
