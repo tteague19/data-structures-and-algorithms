@@ -35,6 +35,31 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public void add(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
+
+        this.root = addHelper(data, this.root);
+        // balance(this.root);
+    }
+
+    private AVLNode<T> addHelper(T data, AVLNode<T> current) {
+
+        if (current == null) {
+            this.size++;
+            return new AVLNode<T>(data);
+        }
+        if (data.compareTo(current.getData()) > 0) {
+            current.setRight(addHelper(data, current.getRight()));
+            return balance(current);
+        } else if (data.compareTo(current.getData()) < 0) {
+            current.setLeft(addHelper(data, current.getLeft()));
+            return balance(current);
+        }
+
+        // If a node with this value is already in the tree, do not
+        // add it.
+        return balance(current);
     }
 
     /**
