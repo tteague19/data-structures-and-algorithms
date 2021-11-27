@@ -1,5 +1,7 @@
 package com.project.module08;
 
+import java.util.NoSuchElementException;
+
 /**
  * Your implementation of the AVL tree rotations.
  */
@@ -40,7 +42,6 @@ public class AVL<T extends Comparable<? super T>> {
         }
 
         this.root = addHelper(data, this.root);
-        // balance(this.root);
     }
 
     private AVLNode<T> addHelper(T data, AVLNode<T> current) {
