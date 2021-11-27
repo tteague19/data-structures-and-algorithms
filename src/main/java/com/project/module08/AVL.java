@@ -63,6 +63,16 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public AVLNode<T> rotateLeft(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+
+        // The current node's original right child is referred to as
+        // "B" in the pseudocode, and we continue that nomenclature.
+        AVLNode<T> nodeB = currentNode.getRight();
+        currentNode.setRight(nodeB.getLeft());
+        nodeB.setLeft(currentNode);
+        updateHeightAndBF(currentNode);
+        updateHeightAndBF(nodeB);
+
+        return nodeB;
     }
 
     /**
@@ -88,6 +98,16 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public AVLNode<T> rotateRight(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+
+        // The current node's original left child is referred to as
+        // "B" in the pseudocode, and we continue that nomenclature.
+        AVLNode<T> nodeB = currentNode.getLeft();
+        currentNode.setLeft(nodeB.getRight());
+        nodeB.setRight(currentNode);
+        updateHeightAndBF(currentNode);
+        updateHeightAndBF(nodeB);
+
+        return nodeB;
     }
 
     /**
