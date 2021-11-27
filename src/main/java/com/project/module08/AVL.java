@@ -93,6 +93,75 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public T remove(T data) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        if (data == null) {
+            throw new IllegalArgumentException();
+        }
+
+        AVLNode<T> dummy = new AVLNode<>(null);
+        this.root = removeHelper(data, this.root, dummy);
+
+        if (dummy.getData() == null) {
+            throw new NoSuchElementException();
+        }
+
+        this.size--;
+        return dummy.getData();
+    }
+
+    private AVLNode<T> removeHelper(T data, AVLNode<T> current, AVLNode<T> dummy) {
+        if (current == null) {
+            return null;
+        } else if (current.getData().equals(data)) {
+            dummy.setData(current.getData());
+
+            int numChildren = countNumberOfChildren(current);
+            if (numChildren == 0) {
+                return null;
+            } else if (numChildren == 1) {
+                if (current.getLeft() != null) {
+                    return balance(current.getLeft());
+                } else {
+                    return balance(current.getRight());
+                }
+            } else if (numChildren == 2) {
+                AVLNode<T> dummy2 = new AVLNode<>(null);
+                AVLNode<T> successor = findSuccessor(current.getRight(), dummy2);
+                current.setRight(successor);
+                current.setData(dummy2.getData());
+            }
+
+        } else if (data.compareTo(current.getData()) < 0) {
+            current.setLeft(removeHelper(data, current.getLeft(), dummy));
+        } else {
+            current.setRight(removeHelper(data, current.getRight(), dummy));
+        }
+
+        return balance(current);
+    }
+
+    private int countNumberOfChildren(AVLNode<T> node) {
+        int numChildren = 0;
+
+        if (node.getLeft() != null) {
+            numChildren++;
+        }
+
+        if (node.getRight() != null) {
+            numChildren++;
+        }
+
+        return numChildren;
+    }
+
+    private AVLNode<T> findSuccessor(AVLNode<T> current, AVLNode<T> dummy) {
+        if (current.getLeft() == null) {
+            dummy.setData(current.getData());
+            return current.getRight();
+        }
+
+        current.setLeft(findSuccessor(current.getLeft(), dummy));
+
+        return current;
     }
 
     /**

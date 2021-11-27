@@ -566,4 +566,144 @@ public class AVLTests {
 
         assertEquals(9, avl.size());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveNullData() {
+        AVL<Integer> avl = new AVL();
+        avl.add(null);
+    }
+
+    @Test
+    public void testRemove() {
+        AVL<Integer> avl = new AVL();
+        avl.add(2);
+        avl.add(0);
+        avl.add(4);
+        avl.add(1);
+        avl.add(3);
+        avl.add(6);
+        avl.add(5);
+
+        AVLNode<Integer> testNode = avl.getRoot();
+        assertEquals(Integer.valueOf(2), testNode.getData());
+        assertEquals(3, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getLeft();
+        assertEquals(Integer.valueOf(0), testNode.getData());
+        assertEquals(1, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getLeft().getRight();
+        assertEquals(Integer.valueOf(1), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight();
+        assertEquals(Integer.valueOf(4), testNode.getData());
+        assertEquals(2, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getLeft();
+        assertEquals(Integer.valueOf(3), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getRight();
+        assertEquals(Integer.valueOf(6), testNode.getData());
+        assertEquals(1, testNode.getHeight());
+        assertEquals(1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getRight().getLeft();
+        assertEquals(Integer.valueOf(5), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        assertEquals(7, avl.size());
+
+        // Finally, we add a node that will require a rebalancing.
+        avl.remove(3);
+
+        testNode = avl.getRoot();
+        assertEquals(Integer.valueOf(2), testNode.getData());
+        assertEquals(2, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getLeft();
+        assertEquals(Integer.valueOf(0), testNode.getData());
+        assertEquals(1, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getLeft().getRight();
+        assertEquals(Integer.valueOf(1), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight();
+        assertEquals(Integer.valueOf(5), testNode.getData());
+        assertEquals(1, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getLeft();
+        assertEquals(Integer.valueOf(4), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getRight();
+        assertEquals(Integer.valueOf(6), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        assertEquals(6, avl.size());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testRemoveDataNotPresent() {AVL<Integer> avl = new AVL();
+        avl.add(2);
+        avl.add(0);
+        avl.add(4);
+        avl.add(1);
+        avl.add(3);
+        avl.add(6);
+        avl.add(5);
+
+        AVLNode<Integer> testNode = avl.getRoot();
+        assertEquals(Integer.valueOf(2), testNode.getData());
+        assertEquals(3, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getLeft();
+        assertEquals(Integer.valueOf(0), testNode.getData());
+        assertEquals(1, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getLeft().getRight();
+        assertEquals(Integer.valueOf(1), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight();
+        assertEquals(Integer.valueOf(4), testNode.getData());
+        assertEquals(2, testNode.getHeight());
+        assertEquals(-1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getLeft();
+        assertEquals(Integer.valueOf(3), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getRight();
+        assertEquals(Integer.valueOf(6), testNode.getData());
+        assertEquals(1, testNode.getHeight());
+        assertEquals(1, testNode.getBalanceFactor());
+
+        testNode = avl.getRoot().getRight().getRight().getLeft();
+        assertEquals(Integer.valueOf(5), testNode.getData());
+        assertEquals(0, testNode.getHeight());
+        assertEquals(0, testNode.getBalanceFactor());
+
+        assertEquals(7, avl.size());
+
+        avl.remove(19);
+    }
 }
