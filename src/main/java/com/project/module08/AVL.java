@@ -129,6 +129,7 @@ public class AVL<T extends Comparable<? super T>> {
                 AVLNode<T> successor = findSuccessor(current.getRight(), dummy2);
                 current.setRight(successor);
                 current.setData(dummy2.getData());
+                current = balance(current);
             }
 
         } else if (data.compareTo(current.getData()) < 0) {
@@ -162,7 +163,7 @@ public class AVL<T extends Comparable<? super T>> {
 
         current.setLeft(findSuccessor(current.getLeft(), dummy));
 
-        return current;
+        return balance(current);
     }
 
     /**
