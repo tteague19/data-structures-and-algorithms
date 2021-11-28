@@ -161,7 +161,7 @@ public class AVLTests {
         assertEquals(7, avl.size());
 
         // Finally, we add a node that will require a rebalancing.
-        avl.remove(3);
+        avl.remove(4);
 
         testNode = avl.getRoot();
         assertEquals(Integer.valueOf(2), testNode.getData());
@@ -184,7 +184,7 @@ public class AVLTests {
         assertEquals(0, testNode.getBalanceFactor());
 
         testNode = avl.getRoot().getRight().getLeft();
-        assertEquals(Integer.valueOf(4), testNode.getData());
+        assertEquals(Integer.valueOf(3), testNode.getData());
         assertEquals(0, testNode.getHeight());
         assertEquals(0, testNode.getBalanceFactor());
 
