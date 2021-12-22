@@ -29,6 +29,22 @@ public class Sorting {
      */
     public static <T> void bubbleSort(T[] arr, Comparator<T> comparator) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        int stopIndex = arr.length - 1;
+
+        while (stopIndex > 0) {
+            int innerIndex = 0;
+            int lastSwapped = 0;
+            while (innerIndex < stopIndex) {
+                if (comparator.compare(arr[innerIndex], arr[innerIndex+1]) > 0) {
+                    T temp = arr[innerIndex];
+                    arr[innerIndex] = arr[innerIndex+1];
+                    arr[innerIndex+1] = temp;
+                    lastSwapped = innerIndex;
+                }
+                innerIndex++;
+            }
+            stopIndex = lastSwapped;
+        }
     }
 
     /**
