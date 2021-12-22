@@ -89,5 +89,14 @@ public class Sorting {
      */
     public static <T> void insertionSort(T[] arr, Comparator<T> comparator) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        for (int outerIndex = 1; outerIndex < arr.length; outerIndex++) {
+            int innerIndex = outerIndex;
+            while((innerIndex > 0) && (comparator.compare(arr[innerIndex], arr[innerIndex-1]) < 0)) {
+                T temp = arr[innerIndex];
+                arr[innerIndex] = arr[innerIndex-1];
+                arr[innerIndex-1] = temp;
+                innerIndex--;
+            }
+        }
     }
 }

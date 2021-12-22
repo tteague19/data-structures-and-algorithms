@@ -18,4 +18,24 @@ public class SortingTests {
 
         assertArrayEquals(expecteds, actuals);
     }
+
+    @Test
+    public void testBubbleSortDuplicates() {
+        Integer[] actuals = new Integer[]{1, 2, 6, 5, 3, 6, 7, 8, 9};
+        Integer[] expecteds = new Integer[]{1, 2, 3, 5, 6, 6, 7, 8, 9};
+        IntegerComparator comparator = new IntegerComparator();
+        Sorting.bubbleSort(actuals, comparator);
+
+        assertArrayEquals(expecteds, actuals);
+    }
+
+    @Test
+    public void testInsertionSort() {
+        Integer[] actuals = new Integer[]{6, 4, 2, 5, 3, 7, 6, 8, 9, 10};
+        Integer[] expecteds = new Integer[]{2, 3, 4, 5, 6, 6, 7, 8, 9, 10};
+        IntegerComparator comparator = new IntegerComparator();
+        Sorting.insertionSort(actuals, comparator);
+
+        assertArrayEquals(expecteds, actuals);
+    }
 }
