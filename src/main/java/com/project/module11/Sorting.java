@@ -41,6 +41,51 @@ public class Sorting {
      */
     public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+
+        // In this instance, we have reached the base case.
+        if (arr.length <= 1) {
+            return;
+        }
+
+        int midIndex = arr.length / 2;
+        T[] leftArr = (T[]) new Object[midIndex];
+        T[] rightArr = (T[]) new Object[arr.length - midIndex];
+
+        for (int copyIndex = 0; copyIndex < arr.length; copyIndex++) {
+            if (copyIndex < midIndex) {
+                leftArr[copyIndex] = arr[copyIndex];
+            } else {
+                rightArr[copyIndex - midIndex] = arr[copyIndex];
+            }
+        }
+
+        mergeSort(leftArr, comparator);
+        mergeSort(rightArr, comparator);
+
+        // We then merge the two subarrays.
+        int i = 0;
+        int j = 0;
+        while (i < leftArr.length && j < rightArr.length) {
+            if (comparator.compare(leftArr[i], rightArr[j]) <= 0) {
+                arr[i + j] = leftArr[i];
+                i++;
+            } else {
+                arr[i + j] = rightArr[j];
+                j++;
+            }
+        }
+
+        // The following two loops handle "emptying" the subarrays
+        // after one of them reaches its end.
+        while (i < leftArr.length) {
+            arr[i + j] = leftArr[i];
+            i++;
+        }
+
+        while (j < rightArr.length) {
+            arr[i + j] = rightArr[j];
+            j++;
+        }
     }
 
     /**
