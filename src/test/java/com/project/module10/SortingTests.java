@@ -1,11 +1,6 @@
 package com.project.module10;
 
 import static org.junit.Assert.assertArrayEquals;
-
-import java.util.Comparator;
-
-import static org.junit.Assert.assertArrayEquals;
-
 import org.junit.Test;
 
 public class SortingTests {
