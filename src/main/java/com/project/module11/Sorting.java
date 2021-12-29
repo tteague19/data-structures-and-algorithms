@@ -120,5 +120,35 @@ public class Sorting {
      */
     public static void lsdRadixSort(int[] arr) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        Queue<Integer>[] buckets = new Queue[19];
+
+        // We must initialize the array of queues.
+        for (int i = 0; i < 19; i++) {
+            buckets[i] = new LinkedList<Integer>();
+        }
+
+        int k = 0;
+        for (int elem : arr) {
+            int elemLength = String.valueOf(Math.abs(elem)).length();
+            if (elemLength > k) {
+                k = elemLength;
+            }
+        }
+
+        int base = 1;
+        for (int iteration = 0; iteration <= k; iteration++) {
+            for (int elemIndex = 0; elemIndex < arr.length; elemIndex++) {
+                int currentDigit = (arr[elemIndex] / base) % 10;
+                buckets[currentDigit + 9].add(Integer.valueOf(arr[elemIndex]));
+            }
+
+            int index = 0;
+            for (Queue<Integer> bucket : buckets) {
+                while (!bucket.isEmpty()) {
+                    arr[index++] = (int) bucket.remove();
+                }
+            }
+            base = base * 10;
+        }
     }
 }

@@ -18,13 +18,12 @@ public class SortingTests {
         assertArrayEquals(expecteds, actuals);
     }
 
-    // @Test
-    // public void testLSDRadixSort() {
-    //     Integer[] actuals = new Integer[]{5, 7, 8, 9, 3, 6, 4, 6, 2, 10};
-    //     Integer[] expecteds = new Integer[]{2, 3, 4, 5, 6, 6, 7, 8, 9, 10};
-    //     IntegerComparator comparator = new IntegerComparator();
-    //     Sorting.lsdRadixSort(actuals, comparator);
+    @Test
+    public void testLSDRadixSort() {
+        int[] actuals = new int[]{17, 743, 672, 780, 917, 743, 623, 288, 432, 281, 76};
+        int[] expecteds = new int[]{17, 76, 281, 288, 432, 623, 672, 743, 743, 780, 917};
+        Sorting.lsdRadixSort(actuals);
 
-    //     assertArrayEquals(expecteds, actuals);
-    // }
+        assertArrayEquals(expecteds, actuals);
+    }
 }
