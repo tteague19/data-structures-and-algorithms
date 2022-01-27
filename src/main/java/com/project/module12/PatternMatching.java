@@ -27,7 +27,34 @@ public class PatternMatching {
      * @return           List containing the starting index for each match found.
      */
     public static List<Integer> boyerMoore(CharSequence pattern, CharSequence text, CharacterComparator comparator) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        Map<Character, Integer> lastTable = buildLastTable(pattern);
+        List<Integer> matchList = new ArrayList<>();
+        int i = 0;
+        int patternLength = pattern.length();
+        int textLength = text.length();
+
+        while (i <= textLength - patternLength) {
+            int j = patternLength - 1;
+            while (j >= 0 && charsMatch(text.charAt(i + j), pattern.charAt(j), comparator)) {
+                j--;
+            }
+
+            if (j == -1) {
+                matchList.add(i);
+                i++;
+            } else {
+                Character shiftChar = text.charAt(i + j);
+                Integer shift = lastTable.getOrDefault(shiftChar, -1);
+
+                if (shift < j) {
+                    i = i + j - shift;
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        return matchList;
     }
 
     /**
@@ -62,5 +89,9 @@ public class PatternMatching {
         }
 
         return lastTable;
+    }
+
+    private static boolean charsMatch(Character a, Character b, CharacterComparator comparator) {
+        return comparator.compare(a, b) == 0;
     }
 }
