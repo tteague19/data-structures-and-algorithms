@@ -56,6 +56,11 @@ public class PatternMatching {
      *         to their last occurrence in the pattern.
      */
     public static Map<Character, Integer> buildLastTable(CharSequence pattern) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        Map<Character, Integer> lastTable = new HashMap<>();
+        for (int i = 0; i < pattern.length(); i++) {
+            lastTable.put(pattern.charAt(i), i);
+        }
+
+        return lastTable;
     }
 }
