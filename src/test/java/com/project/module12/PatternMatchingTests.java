@@ -21,4 +21,16 @@ public class PatternMatchingTests {
         Map<Character, Integer> actual = PatternMatching.buildLastTable(pattern);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testLastTableEmpty() {
+        Map<Character, Integer> expected = new HashMap<>();
+
+        CharSequence pattern = "";
+
+        Map<Character, Integer> actual = PatternMatching.buildLastTable(pattern);
+        assertEquals(expected, actual);
+    }
+
+    @Test
 }
