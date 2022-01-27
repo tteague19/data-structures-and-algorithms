@@ -33,19 +33,40 @@ public class PatternMatching {
         int patternLength = pattern.length();
         int textLength = text.length();
 
+        // We iterate until the end pattern (which is aligned with the
+        // text at index i) "falls off" the end of the text.
         while (i <= textLength - patternLength) {
             int j = patternLength - 1;
+
+            // We begin comparing characters in the text and the
+            // pattern at the end of the pattern and its corresponding
+            // index in the text.
             while (j >= 0 && charsMatch(text.charAt(i + j), pattern.charAt(j), comparator)) {
                 j--;
             }
 
+            // If the value of the index j is -1, then we have
+            // matched all characters in the pattern and, thus, have
+            // a full match. We add the index in the text of the start
+            // of the matching sub-string to the output list and begin
+            // searching again after shifting one character to the
+            // right in the text.
             if (j == -1) {
                 matchList.add(i);
                 i++;
             } else {
+                // If the value of j is not -1, then there was a
+                // mismatch between the pattern and the current
+                // location in the text.
                 Character shiftChar = text.charAt(i + j);
                 Integer shift = lastTable.getOrDefault(shiftChar, -1);
 
+                // If the mismatched character is in the pattern and
+                // its last occurrence in the pattern is to the left
+                // of the mismatch, we shift the pattern to align the
+                // pattern with the current section of the text.
+                // Otherwise, we shift the pattern one character to
+                // the right.
                 if (shift < j) {
                     i = i + j - shift;
                 } else {
@@ -90,6 +111,15 @@ public class PatternMatching {
 
         return lastTable;
     }
+
+    /**
+     * A helper method to determine if two characters are the same.
+     *
+     * @param a             One of the characters to compare.
+     * @param b             One of the characters to compare.
+     * @param comparator    Comparator object that determines if two characters are equal.
+     * @return              Boolean indicator of whether the characters are the same.
+     */
 
     private static boolean charsMatch(Character a, Character b, CharacterComparator comparator) {
         return comparator.compare(a, b) == 0;
