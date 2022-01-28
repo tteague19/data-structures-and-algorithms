@@ -41,26 +41,7 @@ public class GraphAlgorithms {
      * @return List of vertices in visited order.
      */
     public static <T> List<Vertex<T>> bfs(Vertex<T> start, Graph<T> graph) {
-        Set<Vertex<T>> visitedSet = new LinkedHashSet<>();
-        Queue<Vertex<T>> queue = new LinkedList<>();
-        Map<Vertex<T>, List<VertexDistance<T>>> adjMap = graph.getAdjList();
-
-        visitedSet.add(start);
-        queue.add(start);
-
-        while (!queue.isEmpty()) {
-            Vertex<T> v = queue.remove();
-            List<VertexDistance<T>> neighbors = adjMap.get(v);
-
-            for (VertexDistance<T> neighbor : neighbors) {
-                if (!visitedSet.contains(neighbor.getVertex())) {
-                    visitedSet.add(neighbor.getVertex());
-                    queue.add(neighbor.getVertex());
-                }
-            }
-        }
-
-        return new ArrayList<>(visitedSet);
+        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
     }
 
     /**
@@ -92,6 +73,23 @@ public class GraphAlgorithms {
      * @return List of vertices in visited order.
      */
     public static <T> List<Vertex<T>> dfs(Vertex<T> start, Graph<T> graph) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        Set<Vertex<T>> visitedSet = new LinkedHashSet<>();
+        List<Vertex<T>> outputList = dfsHelper(start, graph, visitedSet);
+
+        return outputList;
+    }
+
+    private static <T> List<Vertex<T>> dfsHelper(Vertex<T> start, Graph<T> graph, Set<Vertex<T>> visitedSet) {
+
+        visitedSet.add(start);
+        Map<Vertex<T>, List<VertexDistance<T>>> adjMap = graph.getAdjList();
+        List<VertexDistance<T>> neighbors = adjMap.get(start);
+        for (VertexDistance<T> v : neighbors) {
+            if (!visitedSet.contains(v.getVertex())) {
+                dfsHelper(v.getVertex(), graph, visitedSet);
+            }
+        }
+
+        return new ArrayList<>(visitedSet);
     }
 }
