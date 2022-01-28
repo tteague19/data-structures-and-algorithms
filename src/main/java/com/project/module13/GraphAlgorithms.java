@@ -1,8 +1,7 @@
 package com.project.module13;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,26 @@ public class GraphAlgorithms {
      * @return List of vertices in visited order.
      */
     public static <T> List<Vertex<T>> bfs(Vertex<T> start, Graph<T> graph) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        Set<Vertex<T>> visitedSet = new LinkedHashSet<>();
+        Queue<Vertex<T>> queue = new LinkedList<>();
+        Map<Vertex<T>, List<VertexDistance<T>>> adjMap = graph.getAdjList();
+
+        visitedSet.add(start);
+        queue.add(start);
+
+        while (!queue.isEmpty()) {
+            Vertex<T> v = queue.remove();
+            List<VertexDistance<T>> neighbors = adjMap.get(v);
+
+            for (VertexDistance<T> neighbor : neighbors) {
+                if (!visitedSet.contains(neighbor.getVertex())) {
+                    visitedSet.add(neighbor.getVertex());
+                    queue.add(neighbor.getVertex());
+                }
+            }
+        }
+
+        return new ArrayList<>(visitedSet);
     }
 
     /**
