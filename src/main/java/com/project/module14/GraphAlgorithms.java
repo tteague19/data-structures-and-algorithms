@@ -1,6 +1,8 @@
 package com.project.module14;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -50,15 +52,15 @@ public class GraphAlgorithms {
     public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
         Set<Vertex<T>> visitedSet = new HashSet<>();
         Set<Edge<T>> mstEdgeSet = new HashSet<>();
-        Set<Edge<T>> edgeList = graph.getEdges();
+        Map<Vertex<T>, List<VertexDistance<T>>> adjMap = graph.getAdjList();
+
         Queue<Edge<T>> priorityQueue = new PriorityQueue<Edge<T>>();
 
-        priorityQueue = addEdgesToPriorityQueue(start, edgeList, visitedSet, priorityQueue);
+        priorityQueue = addEdgesToPriorityQueue(start, adjMap.get(start), visitedSet, priorityQueue);
         visitedSet.add(start);
 
         while (!priorityQueue.isEmpty() && visitedSetNotFull(visitedSet, graph)) {
             Edge<T> edge = priorityQueue.remove();
-            // List<VertexDistance<T>> neighbors = adjMap.get(v);
 
             if (!visitedSet.contains(edge.getV())) {
                 visitedSet.add(edge.getV());
@@ -66,7 +68,7 @@ public class GraphAlgorithms {
                 // We represent an undirected graph with two edges
                 // with swapped start and end verticies.
                 mstEdgeSet.add(new Edge<>(edge.getV(), edge.getU(), edge.getWeight()));
-                priorityQueue = addEdgesToPriorityQueue(edge.getV(), edgeList, visitedSet, priorityQueue);
+                priorityQueue = addEdgesToPriorityQueue(edge.getV(), adjMap.get(edge.getV()), visitedSet, priorityQueue);
             }
         }
 
@@ -78,10 +80,11 @@ public class GraphAlgorithms {
     }
 
     private static <T> Queue<Edge<T>> addEdgesToPriorityQueue(Vertex<T> v,
-                                                              Set<Edge<T>> edgeList,
+                                                              List<VertexDistance<T>> vertexDistList,
                                                               Set<Vertex<T>> visitedSet,
                                                               Queue<Edge<T>> queue) {
-        for (Edge<T> edge : edgeList) {
+        for (VertexDistance<T> vertexDist : vertexDistList) {
+            Edge<T> edge = new Edge<>(v, vertexDist.getVertex(), vertexDist.getDistance());
             if (edge.getU().equals(v) && !visitedSet.contains(edge.getV())) {
                 queue.add(edge);
             }

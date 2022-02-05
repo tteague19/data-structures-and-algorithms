@@ -31,7 +31,7 @@ public class GraphAlgorithmsTests {
         vertices.add(vertexH);
 
         // We must create reverse edges to mimic an undirected graph.
-        Set<Edge<String>> edges = new LinkedHashSet<>();
+        Set<Edge<String>> edges = new HashSet<>();
         Edge<String> edgeAD = new Edge<String>(vertexA, vertexD, 6);
         Edge<String> edgeDA = new Edge<String>(vertexD, vertexA, 6);
 
