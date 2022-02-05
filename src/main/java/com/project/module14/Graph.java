@@ -42,7 +42,7 @@ public class Graph<T> {
         this.edges = new HashSet<>(edges);
         adjList = new HashMap<>();
         for (Vertex<T> v : vertices) {
-            adjList.put(v, new ArrayList<>());
+            adjList.put(v, new ArrayList<VertexDistance<T>>());
         }
 
         for (Edge<T> e : edges) {
