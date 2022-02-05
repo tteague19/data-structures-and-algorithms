@@ -1,7 +1,6 @@
 package com.project.module14;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -49,6 +48,65 @@ public class GraphAlgorithms {
      * @return The MST of the graph or null if there is no valid MST.
      */
     public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        Set<Vertex<T>> visitedSet = new HashSet<>();
+        Set<Edge<T>> mstEdgeSet = new HashSet<>();
+        Set<Edge<T>> edgeList = graph.getEdges();
+        Queue<Edge<T>> priorityQueue = new PriorityQueue<Edge<T>>();
+
+        priorityQueue = addEdgesToPriorityQueue(start, edgeList, visitedSet, priorityQueue);
+        visitedSet.add(start);
+
+        while (!priorityQueue.isEmpty() && visitedSetNotFull(visitedSet, graph)) {
+            Edge<T> edge = priorityQueue.remove();
+            // List<VertexDistance<T>> neighbors = adjMap.get(v);
+
+            if (!visitedSet.contains(edge.getV())) {
+                visitedSet.add(edge.getV());
+                mstEdgeSet.add(edge);
+                // We represent an undirected graph with two edges
+                // with swapped start and end verticies.
+                mstEdgeSet.add(new Edge<>(edge.getV(), edge.getU(), edge.getWeight()));
+                priorityQueue = addEdgesToPriorityQueue(edge.getV(), edgeList, visitedSet, priorityQueue);
+            }
+        }
+
+        if (mstInvalid(graph, mstEdgeSet)) {
+            mstEdgeSet = null;
+        }
+
+        return mstEdgeSet;
+    }
+
+    private static <T> Queue<Edge<T>> addEdgesToPriorityQueue(Vertex<T> v,
+                                                              Set<Edge<T>> edgeList,
+                                                              Set<Vertex<T>> visitedSet,
+                                                              Queue<Edge<T>> queue) {
+        for (Edge<T> edge : edgeList) {
+            if (edge.getU().equals(v) && !visitedSet.contains(edge.getV())) {
+                queue.add(edge);
+            }
+        }
+
+        return queue;
+    }
+
+    private static <T> boolean mstInvalid(Graph<T> graph, Set<Edge<T>> mstEdgeSet) {
+
+        Set<Vertex<T>> vertices = graph.getVertices();
+        int numVertices = vertices.size();
+        int numEdges = mstEdgeSet.size();
+
+        // Since we represent the undirected graph with bidirectional
+        // edges, we must multiply the traditional number of edges by
+        // two.
+        return numEdges != 2 * (numVertices - 1);
+    }
+
+    private static <T> boolean visitedSetNotFull(Set<Vertex<T>> visitedSet, Graph <T> graph) {
+        Set<Vertex<T>> vertices = graph.getVertices();
+        int numVertices = vertices.size();
+        int numVisitedVertices = visitedSet.size();
+
+        return numVertices > numVisitedVertices;
     }
 }
